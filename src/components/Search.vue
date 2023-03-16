@@ -1,17 +1,41 @@
-<script setup lang="ts">
-  import { createApp } from 'vue';
+<script lang="ts">
+  import { createApp, ref } from 'vue';
 
+  export default {
+    setup(_, context) {
+      const searchQuery = ref('');
+
+      function search() {
+        context.emit('search', searchQuery.value);
+      }
+
+      return {
+        searchQuery,
+        search,
+      };
+    },
+  };
 </script>
 
 <template>
-
-  <div class="container search flex flex-row font-bold  py-2 px-4 rounded-lg border-0 bg-dm_darkblue focus:outline-none">
-      <input type="text" class="search-input" placeholder="Search GitHub username..."/>
-      <button class="inline button">Search</button>
+  <div class="search flex flex-row justify-between gap-2 py-2 pl-3 pr-2 rounded-2xl border-0 bg-dm_darkblue focus:outline-none">
+    <img class="object-contain w-6" src="assets/icon-search.svg" />
+    <input
+      v-model="searchQuery"
+      @keyup.enter="search"
+      type="text"
+      class="search-input bg-transparent w-full focus:outline-none"
+      placeholder="Search GitHub username…"
+    />
+    <button @click="search" class="inline button bg-primary font-bold rounded-xl text-sm px-4 py-3">Search</button>
   </div>
-
 </template>
 
 <style>
+
+.search-input::placeholder {
+  font-size: 13px;
+  color: #FFFFFF;
+}
 
 </style>

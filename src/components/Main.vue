@@ -15,17 +15,17 @@
 </script>
 
 <template>
-  <div class="flex flex-col">
-    
-    <Header></Header>
-      
-    <Search></Search>
-    
-    <User></User>
-    
-  </div>
+  <main class="container main flex flex-col justify-center font-spacemono gap-4">
+      <Header></Header>      
+      <User></User>
+  </main>
 </template>
 
 <style>
+
+.main {
+  min-width: 20.4375rem;
+  max-width: 45.625rem;
+}
 
 </style>
