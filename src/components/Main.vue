@@ -1,21 +1,10 @@
 <script setup lang="ts">
-  import { createApp } from 'vue';
   import Header from './Header.vue';
-  import Search from './Search.vue';
   import User from './User.vue';
-
-
-  const main = createApp({
-    data() {
-      return {
-        msg: 'Main Component'
-      }
-    }
-  })
 </script>
 
 <template>
-  <main class="container main flex flex-col justify-center font-spacemono gap-4">
+  <main class="container main flex flex-col justify-center font-spacemono gap-4 text-lm_darkblue dark:text-dm_white">
       <Header></Header>      
       <User></User>
   </main>

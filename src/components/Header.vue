@@ -1,22 +1,36 @@
 <script setup lang="ts">
-  import { createApp } from 'vue';
+import { ref } from 'vue';
 
+const isDarkMode = ref(true);
+
+const toggleDarkMode = () => {
+  isDarkMode.value = !isDarkMode.value;
+  document.documentElement.classList.toggle('dark');
+};
 </script>
 
 <template>
-  <div class="header font-bold flex flex-row justify-between items-center pb-9">
-    <span class="text-2xl">
-      devfinder
-    </span>
-    <div class="uppercase text-sm cursor-pointer">
-        <a class="dark:text-dm_white flex items-center gap-4">
-          <span class="dark: tracking-widest">Light</span>
-          <img class="inline" src="assets/icon-sun.svg"/>
-        </a>
+  <div
+    class="header font-bold flex flex-row justify-between items-center pb-9"
+  >
+    <span class="text-2xl text-lm_dark dark:text-dm_white">devfinder</span>
+    <div
+      class="uppercase text-sm cursor-pointer"
+      @click="toggleDarkMode"
+    >
+      <a
+        class="flex items-center gap-4 text-lm_darkblue"
+        :class="{ 'text-dm_white': isDarkMode }"
+      >
+        <span
+          class="tracking-widest"
+          :class="{ 'text-dm_white': isDarkMode }"
+        >{{ !isDarkMode ? 'Dark' : 'Light' }}</span>
+        <img
+          class="inline"
+          :src="!isDarkMode ? 'assets/icon-moon.svg' : 'assets/icon-sun.svg'"
+        />
+      </a>
     </div>
   </div>
 </template>
-
-<style>
-
-</style>

@@ -58,14 +58,14 @@ export default defineComponent({
 
 <template>
     <Search @search="updateUsername" />
-    <div v-if="userInfo" class="card text-xl flex flex-col rounded-2xl border-0 bg-dm_darkblue">
+    <div v-if="userInfo" class="card text-xl flex flex-col rounded-2xl border-0 bg-lm_white dark:bg-dm_darkblue shadow-xl">
       <div class="profile flex flex-row gap-5">
         <div class="w-16 md:w-28">
           <img class="rounded-full" :src="userInfo.avatar_url" alt="profile image" />
         </div>
 
         <div class="info flex-col">
-          <div class="name text-base font-bold">{{ userInfo.name || userInfo.login }}</div>
+          <div class="name text-base font-bold text-lm_dark dark:text-dm_white">{{ userInfo.name || userInfo.login }}</div>
           <div class="handle text-xs pb-2 text-primary">@{{ userInfo.login }}</div>
           <div class="joined text-xs">Joined {{ new Date(userInfo.created_at).toLocaleDateString() }}</div>
           
@@ -76,18 +76,18 @@ export default defineComponent({
         {{ userInfo.bio || 'This profile has no bio' }}
       </div>
     
-      <div class="stats flex flex-row justify-evenly rounded-2xl bg-dm_black py-5 px-4">
+      <div class="stats flex flex-row justify-evenly rounded-2xl bg-lm_whitegrey dark:bg-dm_black py-5 px-4">
         <div class="flex flex-col justify-center items-center gap-2">
           <span class="text-xs">Repos</span>
-          <span class="text-base font-bold">{{ userInfo.public_repos }}</span>
+          <span class="text-base font-bold text-lm_dark dark:text-dm_white">{{ userInfo.public_repos }}</span>
         </div>
         <div class="flex flex-col justify-center items-center gap-2">
           <span class="text-xs">Followers</span>
-          <span class="text-base font-bold">{{ userInfo.followers }}</span>
+          <span class="text-base font-bold text-lm_dark dark:text-dm_white">{{ userInfo.followers }}</span>
         </div>
         <div class="flex flex-col justify-center items-center gap-2">
           <span class="text-xs">Following</span>
-          <span class="text-base font-bold">{{ userInfo.following }}</span>
+          <span class="text-base font-bold text-lm_dark dark:text-dm_white">{{ userInfo.following }}</span>
         </div>
       </div>
       
@@ -128,10 +128,6 @@ export default defineComponent({
 </template>
 
 <style>
-.pfp {
-  /* min-width: 4.375rem;
-  max-width: 7.3125rem; */
-}
 
 .bottom-icons{
   color: white;
