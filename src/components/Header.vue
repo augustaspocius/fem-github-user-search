@@ -19,16 +19,17 @@ const toggleDarkMode = () => {
       @click="toggleDarkMode"
     >
       <a
-        class="flex items-center gap-4 text-lm_darkblue"
-        :class="{ 'text-dm_white': isDarkMode }"
+        class="flex items-center gap-4 text-lm_darkblue hover:text-lm_dark"
+        :class="{ 'text-dm_white hover:text-dm_blue': isDarkMode }"
       >
         <span
           class="tracking-widest"
-          :class="{ 'text-dm_white': isDarkMode }"
+          :class="{ 'text-dm_white hover:text-dm_blue': isDarkMode }"
         >{{ !isDarkMode ? 'Dark' : 'Light' }}</span>
         <img
           class="inline"
           :src="!isDarkMode ? 'assets/icon-moon.svg' : 'assets/icon-sun.svg'"
+          alt="theme icon"
         />
       </a>
     </div>

@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, ref, watchEffect } from 'vue';
 import Search from './Search.vue';
 
 interface UserInfo {
@@ -21,44 +21,62 @@ export default defineComponent({
   components: {
     Search,
   },
-  data() {
-    return {
-      username: 'octocat',
-      userInfo: null as UserInfo | null,
-      error: null as string | null,
-    };
-  },
-  methods: {
-    async fetchUserInfo() {
+  setup() {
+    const username = ref('octocat');
+    const userInfo = ref<UserInfo | null>(null);
+    const error = ref<any>(null);
+
+    async function fetchUserInfo(username: string) {
       try {
-        const response = await fetch(`https://api.github.com/users/${this.username}`);
+        const response = await fetch(`https://api.github.com/users/${username}`);
         if (!response.ok) {
-          this.error = 'User not found';
-          this.userInfo = null;
+          const errorData = await response.json();
+          error.value = `Error fetching user information: ${response.status} - ${errorData.message}`;
+          userInfo.value = null;
           return;
         }
-        this.error = null;
-        this.userInfo = await response.json();
-        console.log(this.userInfo);
-      } catch (err) {
-        this.error = 'Error fetching user information';
-        this.userInfo = null;
+        error.value = null;
+        userInfo.value = await response.json();
+      } catch (err: any) {
+        error.value = `Error fetching user information: ${err.message}`;
+        userInfo.value = null;
       }
-    },
-    updateUsername(newUsername: string) {
-      this.username = newUsername;
-      this.fetchUserInfo();
-    },
-  },
-  mounted() {
-    this.fetchUserInfo();
+    }
+    
+    function debounce(fn: (username: string) => Promise<void>, delay: number) {
+      let timeoutId: ReturnType<typeof setTimeout> | null = null;
+      return function (username: string) {
+        if (timeoutId) {
+          clearTimeout(timeoutId);
+        }
+        timeoutId = setTimeout(() => fn(username), delay);
+      };
+    }
+    
+    const debouncedFetchUserInfo = debounce(fetchUserInfo, 300);
+
+    
+    function updateUsername(newUsername: string) {
+      username.value = newUsername;
+    }
+
+    watchEffect(() => {
+      debouncedFetchUserInfo(username.value);
+    });
+
+    return {
+      username,
+      userInfo,
+      error,
+      updateUsername,
+    };
   },
 });
 </script>
 
 <template>
-    <Search @search="updateUsername" />
-    <div v-if="userInfo" class="card text-xl flex flex-col rounded-2xl border-0 bg-lm_white dark:bg-dm_darkblue shadow-xl">
+    <Search @search="updateUsername" :error="error" />
+    <div v-if="userInfo" class="pt-8 px-6 pb-12 text-xl flex flex-col rounded-2xl border-0 bg-lm_white dark:bg-dm_darkblue shadow-xl">
       <div class="profile flex flex-row gap-5">
         <div class="w-16 md:w-28">
           <img class="rounded-full" :src="userInfo.avatar_url" alt="profile image" />
@@ -93,49 +111,34 @@ export default defineComponent({
       
         <div class="pt-6 flex flex-col gap-4 font-bold">
           <div class="flex justify-start items-center gap-3">
-            <img class="bottom-icons" src="/assets/icon-location.svg" alt="location" />
+            <img class="text-white w-5" src="/assets/icon-location.svg" alt="location icon" />
             <span v-if="userInfo.location" class="location text-xs">
               {{ userInfo.location}}
             </span>
           </div>
           
           <div class="flex justify-start items-center gap-3">
-            <img class="bottom-icons" src="/assets/icon-website.svg" alt="location" />
+            <img class="text-white w-5" src="/assets/icon-website.svg" alt="blog icon" />
             <a v-if="userInfo.blog" :href=userInfo.blog class="blog text-xs hover:underline">
               {{ userInfo.blog }}
             </a>
           </div>
           
           <div class="flex justify-start items-center gap-3">
-            <img class="bottom-icons" src="/assets/icon-twitter.svg" alt="location" />
+            <img class="text-white w-5" src="/assets/icon-twitter.svg" alt="twitter logo" />
             <a v-if="userInfo.twitter_username" :href=userInfo.twitter_username class="twitter text-x hover:underline">
               {{ userInfo.twitter_username }}
             </a>
           </div>
           
           <div class="flex justify-start items-center gap-3">
-            <img class="bottom-icons" src="/assets/icon-company.svg" alt="location" />
+            <img class="text-white w-5" src="/assets/icon-company.svg" alt="company icon" />
             <span class="company text-sm">
               {{ userInfo.company }}
             </span>
           </div>
         </div>
       
-    </div>
-    <div v-else class="error">{{ error }}</div>
-    
+    </div>    
     
 </template>
-
-<style>
-
-.bottom-icons{
-  color: white;
-  width:20px;
-}
-
-.card {
-  padding: 32px 24px 48px 24px;
-}
-
-</style>

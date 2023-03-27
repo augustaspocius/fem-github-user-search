@@ -5,10 +5,12 @@
 :root {
   
   --clr-primary:#0079FF;
+  --clr-primary-dimmed:#60ABFF;
   /* dark mode */
   --clr-dark-white: #FFFFFF;
   --clr-dark-black:#141D2F;
   --clr-dark-darkblue:#1E2A47;
+  --clr-dark-blue: #90A4D4;
   
   /* light mode */
   --clr-light-greyblue:#697C9A;

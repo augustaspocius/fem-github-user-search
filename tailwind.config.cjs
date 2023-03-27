@@ -8,10 +8,12 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-       primary: "var(--clr-primary)", //#0079FF
+       primary: "var(--clr-primary)",
+       primarydimmed:"var(--clr-primary-dimmed)",
        dm_darkblue: "var(--clr-dark-darkblue)", 
        dm_white: "var(--clr-dark-white)",
        dm_black: "var(--clr-dark-black)",
+       dm_blue: "var(--clr-dark-blue)",
        lm_white: "var(--clr-light-white)",
        lm_whitegrey: "var(--clr-light-whitegrey)",
        lm_dark: "var(--clr-light-dark)",
