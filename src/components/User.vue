@@ -29,16 +29,24 @@ export default defineComponent({
     async function fetchUserInfo(username: string) {
       try {
         const response = await fetch(`https://api.github.com/users/${username}`);
-        if (!response.ok) {
-          const errorData = await response.json();
-          error.value = `Error fetching user information: ${response.status} - ${errorData.message}`;
+        
+        if (response.status === 404) {
+          error.value = 'No results';
           userInfo.value = null;
           return;
         }
+        
+        if (!response.ok) {
+          error.value = 'Error fetching user information';
+          userInfo.value = null;
+          return;
+        }
+        
         error.value = null;
         userInfo.value = await response.json();
-      } catch (err: any) {
-        error.value = `Error fetching user information: ${err.message}`;
+        console.log(userInfo);
+      } catch (err) {
+        error.value = 'Error fetching user information';
         userInfo.value = null;
       }
     }
@@ -76,13 +84,13 @@ export default defineComponent({
 
 <template>
     <Search @search="updateUsername" :error="error" />
-    <div v-if="userInfo" class="pt-8 px-6 pb-12 text-xl flex flex-col rounded-2xl border-0 bg-lm_white dark:bg-dm_darkblue shadow-xl">
-      <div class="profile flex flex-row gap-5">
-        <div class="w-16 md:w-28">
+    <div v-if="userInfo" class="pt-8 px-6 pb-12 text-xl grid grid-cols-1 rounded-2xl border-0 bg-lm_white dark:bg-dm_darkblue shadow-xl">
+      <div class="profile grid grid-cols-3 gap-5">
+        <div class="w-full max-w-[117px] auto-cols-min">
           <img class="rounded-full" :src="userInfo.avatar_url" alt="profile image" />
         </div>
 
-        <div class="info flex-col">
+        <div class="info col-span-2 ">
           <div class="name text-base font-bold text-lm_dark dark:text-dm_white">{{ userInfo.name || userInfo.login }}</div>
           <div class="handle text-xs pb-2 text-primary">@{{ userInfo.login }}</div>
           <div class="joined text-xs">Joined {{ new Date(userInfo.created_at).toLocaleDateString() }}</div>
@@ -94,47 +102,59 @@ export default defineComponent({
         {{ userInfo.bio || 'This profile has no bio' }}
       </div>
     
-      <div class="stats flex flex-row justify-evenly rounded-2xl bg-lm_whitegrey dark:bg-dm_black py-5 px-4">
-        <div class="flex flex-col justify-center items-center gap-2">
+      <div class="stats grid grid-cols-3 justify-evenly rounded-2xl bg-lm_whitegrey dark:bg-dm_black py-5 px-4">
+        <div class="flex flex-col justify-center items-center md:items-start gap-2">
           <span class="text-xs">Repos</span>
           <span class="text-base font-bold text-lm_dark dark:text-dm_white">{{ userInfo.public_repos }}</span>
         </div>
-        <div class="flex flex-col justify-center items-center gap-2">
+        <div class="flex flex-col justify-center items-center md:items-start gap-2">
           <span class="text-xs">Followers</span>
           <span class="text-base font-bold text-lm_dark dark:text-dm_white">{{ userInfo.followers }}</span>
         </div>
-        <div class="flex flex-col justify-center items-center gap-2">
+        <div class="flex flex-col justify-center items-center md:items-start gap-2">
           <span class="text-xs">Following</span>
           <span class="text-base font-bold text-lm_dark dark:text-dm_white">{{ userInfo.following }}</span>
         </div>
       </div>
       
-        <div class="pt-6 flex flex-col gap-4 font-bold">
-          <div class="flex justify-start items-center gap-3">
+        <div class="pt-6 grid grid-cols-1 md:grid-cols-2 gap-4 font-bold">
+          <div class="flex justify-start items-center gap-3 md:order-1">
             <img class="text-white w-5" src="/assets/icon-location.svg" alt="location icon" />
             <span v-if="userInfo.location" class="location text-xs">
-              {{ userInfo.location}}
+              {{ userInfo.location }}
+            </span>
+            <span v-else class="location text-xs">
+              Not Available
             </span>
           </div>
           
-          <div class="flex justify-start items-center gap-3">
+          <div class="flex justify-start items-center gap-3 md:order-3">
             <img class="text-white w-5" src="/assets/icon-website.svg" alt="blog icon" />
             <a v-if="userInfo.blog" :href=userInfo.blog class="blog text-xs hover:underline">
               {{ userInfo.blog }}
             </a>
+            <span v-else class="blog text-xs">
+              Not Available
+            </span>
           </div>
           
-          <div class="flex justify-start items-center gap-3">
+          <div class="flex justify-start items-center gap-3 md:order-2">
             <img class="text-white w-5" src="/assets/icon-twitter.svg" alt="twitter logo" />
             <a v-if="userInfo.twitter_username" :href=userInfo.twitter_username class="twitter text-x hover:underline">
               {{ userInfo.twitter_username }}
             </a>
+            <span v-else class="twitter text-xs">
+              Not Available
+            </span>
           </div>
           
-          <div class="flex justify-start items-center gap-3">
+          <div class="flex justify-start items-center gap-3 md:order-4">
             <img class="text-white w-5" src="/assets/icon-company.svg" alt="company icon" />
-            <span class="company text-sm">
+            <span v-if="userInfo.company" class="company text-sm">
               {{ userInfo.company }}
+            </span>
+            <span v-else class="company text-xs">
+              Not Available
             </span>
           </div>
         </div>
