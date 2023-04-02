@@ -11,7 +11,7 @@ const toggleDarkMode = () => {
 
 <template>
   <div
-    class="header font-bold flex flex-row justify-between items-center pb-9"
+    class="header font-bold flex flex-row justify-between items-center pb-5"
   >
     <span class="text-2xl text-lm_dark dark:text-dm_white">devfinder</span>
     <div

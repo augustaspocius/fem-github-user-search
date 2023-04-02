@@ -5,7 +5,7 @@
 
 <template>
   <main class="container main flex flex-col justify-center font-spacemono gap-4 text-lm_darkblue dark:text-dm_white
-                min-w-[20.4375rem] max-w-[45.625rem] mx-auto">
+                min-w-[20.4375rem] sm:max-w-[35.8125rem] lg:max-w-[45.625rem] mx-auto">
       <Header></Header>      
       <User></User>
   </main>
