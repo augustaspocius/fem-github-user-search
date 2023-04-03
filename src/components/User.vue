@@ -56,7 +56,6 @@ export default defineComponent({
 
         error.value = null;
         userInfo.value = await response.json();
-        console.log(userInfo);
       } catch (err) {
         error.value = 'Error fetching user information';
         userInfo.value = null;
@@ -100,7 +99,7 @@ export default defineComponent({
     class="pt-8 px-6 pb-12 md:p-10 text-xl grid grid-cols-[1fr_3fr] gap-x-5 md:gap-x-10 auto-rows-auto rounded-2xl border-0 bg-lm_white dark:bg-dm_darkblue shadow-xl">
     <Avatar :src="userInfo.avatar_url" />
     <ProfileInfo :name="userInfo.name" :login="userInfo.login" :joinedDate="userInfo.created_at" />
-    <Bio :bio="userInfo.bio" />
+    <Bio :bio="userInfo.bio || 'This profile has no bio.'" />
 
     <Stats>
       <StatItem label="Repos" :value="userInfo.public_repos" />

@@ -1,12 +1,15 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { useStore } from 'vuex';
+import { computed } from 'vue';
 
-const isDarkMode = ref(true);
+const store = useStore();
 
 const toggleDarkMode = () => {
-  isDarkMode.value = !isDarkMode.value;
+  store.commit('toggleDarkMode');
   document.documentElement.classList.toggle('dark');
 };
+
+const isDarkMode = computed(() => store.state.isDarkMode);
 </script>
 
 <template>
