@@ -4,7 +4,7 @@ import { defineComponent, PropType } from 'vue';
 export default defineComponent({
     props: {
         name: {
-            type: String as () => string | null,
+            type: String as () => string | null | undefined,
             required: true,
         },
         login: {

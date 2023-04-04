@@ -10,6 +10,8 @@ export default defineComponent({
   },
   setup(_, context) {
     const searchQuery = ref('');
+    
+    const iconSrc = '/assets/icon-search.svg';
 
     function search() {
       context.emit('search', searchQuery.value);
@@ -18,6 +20,7 @@ export default defineComponent({
     return {
       searchQuery,
       search,
+      iconSrc,
     };
   },
 });
@@ -25,7 +28,7 @@ export default defineComponent({
 
 <template>
   <div class="search flex flex-row justify-between gap-2 py-2 pl-3 pr-2 rounded-2xl border-0 bg-lm_white dark:bg-dm_darkblue shadow-xl darkfocus:outline-none">
-    <img class="object-contain w-6 md:m-4" src="assets/icon-search.svg" alt="search icon"/>
+    <img class="object-contain w-6 md:m-4" :src="iconSrc" alt="search icon"/>
     <input
       v-model="searchQuery"
       @keyup.enter="search"
