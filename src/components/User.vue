@@ -10,17 +10,17 @@ import StatItem from './StatItem.vue';
 
 interface UserInfo {
   avatar_url: string;
-  name: string | null;
+  name?: string;
   login: string;
   created_at: string;
-  bio: string | null;
+  bio?: string;
   public_repos: number;
   followers: number;
   following: number;
-  location: string | null;
-  blog: string | null;
-  twitter_username: string | null;
-  company: string | null;
+  location?: string;
+  blog?: string;
+  twitter_username?: string;
+  company?: string;
 }
 
 export default defineComponent({
@@ -112,7 +112,7 @@ export default defineComponent({
         :info-value="userInfo.location" />
       <InfoBlock class="md:order-3" icon-src="/assets/icon-website.svg" icon-alt="blog icon" 
         :info-value="userInfo.blog"
-        :is-link=true />
+        is-link />
       <InfoBlock class="md:order-2" icon-src="/assets/icon-twitter.svg" icon-alt="twitter logo"
         :info-value="userInfo.twitter_username" />
       <InfoBlock class="md:order-4" icon-src="/assets/icon-company.svg" icon-alt="company icon"

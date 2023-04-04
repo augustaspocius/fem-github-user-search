@@ -15,7 +15,11 @@ export default defineComponent({
         infoValue: {
             type: String as () => string | null,
             default: null,
-        }
+        },
+        isLink: {
+            type: Boolean,
+            default: false,
+        },
     },
 });
 </script>
@@ -23,7 +27,7 @@ export default defineComponent({
     <div class="flex justify-start items-center gap-3 text-xs md:text-sm" :class="{ 'opacity-50': !infoValue, ...{ class: $attrs.class } }">
         <img class="text-white w-5 filter-none dark:filter saturate-200 brightness-0 invert" :src="iconSrc"
             :alt="iconAlt" />
-        <template v-if="$attrs['is-link']">
+        <template v-if="isLink">
             <a v-if="infoValue" :href="infoValue" class="hover:underline">
                 {{ infoValue }}
             </a>
