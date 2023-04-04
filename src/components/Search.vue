@@ -11,7 +11,7 @@ export default defineComponent({
   setup(_, context) {
     const searchQuery = ref('');
     
-    const iconSrc = '/assets/icon-search.svg';
+    const iconSrc = 'src/assets/icon-search.svg';
 
     function search() {
       context.emit('search', searchQuery.value);

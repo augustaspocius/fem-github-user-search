@@ -108,14 +108,14 @@ export default defineComponent({
     </Stats>
 
     <div class="col-span-full lg:col-start-2 row-start-4 row-end-5 pt-6 md:pt-7 grid grid-cols-1 md:grid-cols-2 gap-4 font-normal">
-      <InfoBlock class="md:order-1" icon-src="/assets/icon-location.svg" icon-alt="location icon"
+      <InfoBlock class="md:order-1" icon-src="src/assets/icon-location.svg" icon-alt="location icon"
         :info-value="userInfo.location" />
-      <InfoBlock class="md:order-3" icon-src="/assets/icon-website.svg" icon-alt="blog icon" 
+      <InfoBlock class="md:order-3" icon-src="src/assets/icon-website.svg" icon-alt="blog icon" 
         :info-value="userInfo.blog"
         is-link />
-      <InfoBlock class="md:order-2" icon-src="/assets/icon-twitter.svg" icon-alt="twitter logo"
+      <InfoBlock class="md:order-2" icon-src="src/assets/icon-twitter.svg" icon-alt="twitter logo"
         :info-value="userInfo.twitter_username" />
-      <InfoBlock class="md:order-4" icon-src="/assets/icon-company.svg" icon-alt="company icon"
+      <InfoBlock class="md:order-4" icon-src="src/assets/icon-company.svg" icon-alt="company icon"
         :info-value="userInfo.company" />
     </div>
   </div>

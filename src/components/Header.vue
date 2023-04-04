@@ -31,7 +31,7 @@ const isDarkMode = computed(() => store.state.isDarkMode);
         >{{ !isDarkMode ? 'Dark' : 'Light' }}</span>
         <img
           class="inline"
-          :src="!isDarkMode ? 'assets/icon-moon.svg' : 'assets/icon-sun.svg'"
+          :src="!isDarkMode ? 'src/assets/icon-moon.svg' : 'src/assets/icon-sun.svg'"
           alt="theme icon"
         />
       </a>
